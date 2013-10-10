@@ -1,0 +1,2 @@
+ipython==1.1.0
+spidev==2.0
