@@ -1,3 +1,4 @@
+from collections import Counter
 from itertools import islice
 
 import spidev
@@ -39,9 +40,9 @@ def conformant_moving_average(seq, n=50):
         averages.append(average)
         if len(averages) < n:
             continue
-        averages_set = set(averages)
-        print averages_set
-        if len(averages_set) <= 2:
+        averages_counter = Counter(averages)
+        if len(averages_counter) <= 2:
+            (average, _), = averages_counter.most_common(1)
             return average
         averages = averages[1:]
 
