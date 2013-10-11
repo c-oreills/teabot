@@ -26,7 +26,6 @@ def mean(sample, size):
 
 
 def interquartile_mean(sample, size):
-
     sample = list(sorted(sample))
     cull = size/4
     sample = sample[cull:-cull]
