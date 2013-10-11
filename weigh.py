@@ -32,7 +32,7 @@ def interquartile_mean(sample, size):
     return mean(sample, size-2*cull)
 
 
-def conformant_moving_average(seq, n=50):
+def conformant_moving_average(seq, n):
     averages = []
     for w in window(seq, n):
         average = interquartile_mean(w, n)
@@ -57,7 +57,7 @@ def window(seq, n):
 
 
 def weigh_untared():
-    return conformant_moving_average(raw_weights())
+    return conformant_moving_average(raw_weights(), 200)
 
 
 def weigh():
