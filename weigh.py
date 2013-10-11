@@ -6,15 +6,12 @@ s = spidev.SpiDev()
 s.open(0, 0)
 
 
-def weigh_raw(retries=100):
-    for i in xrange(retries):
-        reading = s.xfer2([1, 0, 0])
-        reading = reading[1] * 256 + reading[2]
-        if reading > 2**10:
-            # Error
-            continue
-        return reading
-    raise Exception('Could not get reading')
+def weigh_raw():
+    bytes = s.xfer2([1, 0, 0])
+    reading = bytes[1] & 3
+    reading << 8
+    reading += bytes[2]
+    return reading
 
 
 def raw_weights():
