@@ -10,7 +10,7 @@ tare_value = 0
 def weigh_raw():
     bytes = s.xfer2([1, 0, 0])
     reading = bytes[1] & 3
-    reading << 8
+    reading = reading << 8
     reading += bytes[2]
     return reading
 
