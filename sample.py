@@ -35,3 +35,30 @@ def window(seq, n):
     for i in seq:
         result = result[1:] + (i,)
         yield result
+
+
+def repeated_proportional_sample(seq, sample_size, most_common, repeats):
+    samples = []
+    for i in xrange(100 + repeats):
+        samples.append(proportional_sample(seq, sample_size, most_common))
+        if len(samples) < repeats:
+            continue
+        samples = samples[-repeats:]
+        samples_counter = Counter(samples)
+        if len(samples_counter) > 2:
+            continue
+        if len(samples_counter) == 1:
+            value, = samples_counter.keys()
+            return value
+        v1, v2 = samples_counter.keys()
+        if abs(v1 - v2) > 1:
+            continue
+        # If we're straddling two numbers then round up
+        value = max(v for v in samples_counter)
+        return value
+
+
+def proportional_sample(seq, sample_size, most_common):
+    sample = Counter(islice(seq, sample_size))
+    vals_and_freqs = sample.most_common(most_common)
+    return sum(v*f for v, f in vals_and_freqs)/sum(f for _, f in vals_and_freqs)

@@ -1,6 +1,6 @@
 import spidev
 
-from sample import conformant_moving_average
+from sample import repeated_proportional_sample
 
 s = spidev.SpiDev()
 s.open(0, 0)
@@ -21,7 +21,7 @@ def raw_weights():
 
 
 def weigh_untared():
-    return conformant_moving_average(raw_weights(), 200)
+    return repeated_proportional_sample(raw_weights(), 2000, 5, 3)
 
 
 def weigh():
