@@ -5,6 +5,9 @@ from sample import repeated_proportional_sample
 s = spidev.SpiDev()
 s.open(0, 0)
 
+# Default accuracy, takes about a half second to take this many readings
+ACCURACY = 2000
+
 tare_value = 0
 
 def weigh_raw():
@@ -20,14 +23,14 @@ def raw_weights():
         yield weigh_raw()
 
 
-def weigh_untared():
-    return repeated_proportional_sample(raw_weights(), 2000, 5, 3)
+def weigh_untared(accuracy=ACCURACY):
+    return repeated_proportional_sample(raw_weights(), accuracy, 5, 3)
 
 
-def weigh():
-    return weigh_untared() - tare_value
+def weigh(accuracy=ACCURACY):
+    return weigh_untared(accuracy) - tare_value
 
 
-def tare():
+def tare(accuracy=ACCURACY):
     global tare_value
-    tare_value = weigh_untared()
+    tare_value = weigh_untared(accuracy)
