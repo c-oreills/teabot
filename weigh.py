@@ -34,3 +34,7 @@ def weigh(accuracy=ACCURACY):
 def tare(accuracy=ACCURACY):
     global tare_value
     tare_value = weigh_untared(accuracy)
+
+
+def get_tare():
+    return tare_value

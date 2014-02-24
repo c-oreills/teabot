@@ -1,7 +1,9 @@
 from datetime import datetime
 from time import sleep
 
-from weigh import weigh, tare
+from weigh import weigh, tare, get_tare
+from db import record_weight_change
+
 
 WEIGHT_ERROR = 2
 
@@ -28,4 +30,5 @@ def _bot_loop(current_weight):
 
 
 def _weight_changed(current_weight, new_weight):
-    print datetime.now(), 'Weight was', current_weight, 'now', new_weight
+    print datetime.now(), 'Weight was', current_weight, 'now', new_weight, '(delta', new_weight - current_weight, ')'
+    record_weight_change(current_weight, new_weight, get_tare())
